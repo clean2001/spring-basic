@@ -1,0 +1,58 @@
+// java 빌드에 필요한 플러그인 설정
+plugins {
+	id 'java'
+	id 'org.springframework.boot' version '2.7.11'
+	id 'io.spring.dependency-management' version '1.0.15.RELEASE'
+}
+
+group = 'com.beyond'
+
+// 빌드된 jar 파일의 버전명
+// snapshot: 실험용 버전
+// 0.0.1: 가장 왼쪽은 메이저 버전, 가장 오른쪽 숫자는 마이너 버전
+version = '0.0.1-SNAPSHOT'
+
+java {
+//	toolchain {
+//		languageVersion = JavaLanguageVersion.of(17)
+//	}
+	sourceCompatibility = '11'
+}
+
+configurations {
+	compileOnly {
+		extendsFrom annotationProcessor
+	}
+}
+
+repositories {
+	// 의존성을 가져오는 대상 저장소(repository)
+	// 내부망에서 인터넷을 사용하기 불가한 경우에는 nexus(설치형)과 같은 repository를 사용하기도 함
+	// nexus의 문제: 버전 업데이트의 문제. 라이브러리가 버전업이 되면 사람이 직접 라이브러리 찾아서 부어야 함
+	mavenCentral()
+}
+
+// starter가 붙어있는 라이브러리들은 버전을 명시해주지 않아도, 스프링과 자바 버전에 맞춰서 알아서 버전이 세팅된다.
+// starter 종속성은 일반적으로 별도의 버전 관리가 필요없고, 버전에 따라 호환성을 맞춰 줌.
+// 예를 들어서 lombok은 stater 종속성 아님. 근데 안써줘도 문제가 없어서 안써준 것이다.
+// gradle 자체 버전은 gradle wrapper에서 설정한다.
+dependencies {
+	// DB 연결 및 관리를 위한 의존성: jdbc, mybatis, jpa, spring data jpa
+//	implementation 'org.springframework.boot:spring-boot-starter-data-jdbc'
+//	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+
+	// 타임리프(템플릿 엔진 - JSP, 타임리프 등) 의존성
+	// implementation 키워드는 컴파일 시점과 런타임 시점에 모두 필요한 라이브러리임을 명시
+	implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
+	implementation 'org.springframework.boot:spring-boot-starter-web'
+
+	// 컴파일 시점에서 필요한 라이브러리임을 명시 == 런타임 시점에는 필요가 없다.
+	compileOnly 'org.projectlombok:lombok'
+	annotationProcessor 'org.projectlombok:lombok'
+	testImplementation 'org.springframework.boot:spring-boot-starter-test'
+	testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
+}
+
+tasks.named('test') {
+	useJUnitPlatform()
+}

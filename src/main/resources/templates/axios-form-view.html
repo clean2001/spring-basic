@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+</head>
+<body>
+
+<h2>Case 3: Axios로 form 데이터 전송(text만)</h2>
+<div>
+    <form id="postForm">
+        <div class="form-block">
+            <label for="name">이름: </label>
+            <input type="text" id="name" name="name">
+        </div>
+        <div>
+            <form id="postForm">
+                <div class="form-block">
+                    <label for="name">이름: </label>
+                    <input type="text" id="name" name="name">
+                </div>
+
+                <div class="form-block">
+                    <label for="email">이멜: </label>
+                    <input type="email" id="email" name="email">
+                </div>
+                <div class="form-block">
+                    <label for="password">비번: </label>
+                    <input type="password" id="password" name="password">
+                </div>
+                <button id="submit" type="submit">제출</button>
+            </form>
+        </div>
+        <div class="form-block">
+            <label for="email">이멜: </label>
+            <input type="email" id="email" name="email">
+        </div>
+        <div class="form-block">
+            <label for="password">비번: </label>
+            <input type="password" id="password" name="password">
+        </div>
+        <button id="submit" type="submit">제출</button>
+    </form>
+</div>
+
+
+
+<script>
+    document.getElementById("postForm").addEventListener('submit',
+    async function(event) {
+        event.preventDefault();
+        const name= document.getElementById('name').value; // 값 꺼내오려면 value 붙이는 것 필수
+        const email = document.getElementById('email').value;
+        const password = document.getElementById('password').value;
+
+        const formData = new FormData();
+        formData.append('name', name);
+        formData.append('email', email);
+        formData.append('password', password);
+        console.log(formData);
+
+        // 서버로 보내는 부분
+        try {
+            // 응답 값이 response에 들어가진다.
+            const response = await axios.post("http://localhost:8080/hello/axios-form-view", formData);
+            console.log(response.data); // ok
+            // 화면 라우팅 시켜주기
+        } catch(e) {
+            console.log(e.message);
+        }
+    });
+
+</script>
+</body>
+</html>

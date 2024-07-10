@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Form File</title>
+</head>
+<style>
+    .form-block {
+        margin-top: 10px;
+        margin-bottom: 10px;
+    }
+</style>
+<body>
+<h2>Form File</h2>
+<div>
+    <form action="/hello/form-file-post" method="post" enctype="multipart/form-data">
+        <div class="form-block">
+            <label for="name">이름: </label>
+            <input type="text" id="name" name="name">
+        </div>
+
+        <div class="form-block">
+            <label for="name">이멜: </label>
+            <input type="email" id="email" name="email">
+        </div>
+        <div class="form-block">
+            <label for="name">비번: </label>
+            <input type="password" id="password" name="password">
+        </div>
+        <div class="form-block">
+            <label for="photo">신분증: </label>
+            <input type="file" id="photo" name="photo">
+        </div>
+        <button type="submit">제출</button>
+    </form>
+</div>
+</body>
+</html>

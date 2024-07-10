@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>CASE 7. axios-nested-json-view</title>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+</head>
+<body>
+<h2>case 8.</h2>
+<div>
+    <form id="postForm">
+        <div class="form-block">
+            <label for="name">이름: </label>
+            <input type="text" id="name" name="name">
+        </div>
+
+        <div class="form-block">
+            <label for="email">이멜: </label>
+            <input type="email" id="email" name="email">
+        </div>
+
+        <div class="form-block">
+            <p>성적: </p>
+            <div id="subject-score">
+                <div class="grade">
+                    수업명: <input type="text" name="subject" class="className">
+                    점수: <input type="text" name="score" class="point">
+                </div>
+            </div>
+
+            <div>
+<!--                type을 버튼으로 넣지 않으면, 전송이 나감..?-->
+                <button type="button" id="addGrade" onclick="addScore()">성적 추가</button>
+            </div>
+
+        </div>
+
+        <button id="submit" type="submit">제출</button>
+    </form>
+
+
+
+
+
+</div>
+
+<script>
+    const addScore = () => {
+        const target = document.getElementById("subject-score");
+        target.innerHTML += `<div class="grade">
+                    수업명: <input type="text" name="subject" class="className">
+                    점수: <input type="text" name="score" class="point">
+                    </div>`
+
+    };
+</script>
+
+
+<script>
+    document.getElementById("postForm").addEventListener('submit',
+        async function(event) {
+            event.preventDefault();
+
+            // const name = document.getElementById("name").value;
+            // const email = document.getElementById("email").value;
+            // const subjects = document.getElementsByClassName("subject")
+            // const scores = document.getElementsByClassName("score")
+            //
+            // let grades = [];
+            // const gradeDivs = document.getElementsByClassName('grade');
+            // for(let i=0; i<gradeDivs.length; i++) {
+            //     grades.push({'subject': subjects[i].value, 'score': scores[i].value});
+            // }
+
+            const name = document.getElementById("name").value;
+            const email = document.getElementById("email").value;
+
+
+            let grades = [];
+            const gradeDivs = document.getElementsByClassName('grade');
+            for(let i=0; i<gradeDivs.length; i++) {
+                const className = gradeDivs[i].getElementsByClassName('className')[0].value;
+                const point = gradeDivs[i].getElementsByClassName('point')[0].value;
+                const gradeObj = {className, point};
+                grades.push(gradeObj);
+            }
+
+            console.log(grades);
+
+            const objData = {name, email, grades};
+
+            console.log(objData);
+
+            const jsonData = JSON.stringify(objData);
+
+            try {
+                console.log(jsonData);
+                const response = await axios.post("http://localhost:8080/hello/axios-nested-json-view", jsonData, {headers: {'Content-Type' : 'application/json'}});
+                console.log(response.data)
+            } catch(e) {
+                console.log(e);
+            }
+        });
+
+</script>
+
+</body>
+</html>
