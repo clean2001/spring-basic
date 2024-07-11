@@ -16,7 +16,7 @@ java {
 //	toolchain {
 //		languageVersion = JavaLanguageVersion.of(17)
 //	}
-	sourceCompatibility = '11'
+//	sourceCompatibility = '11' //
 }
 
 configurations {
@@ -38,7 +38,9 @@ repositories {
 // gradle 자체 버전은 gradle wrapper에서 설정한다.
 dependencies {
 	// DB 연결 및 관리를 위한 의존성: jdbc, mybatis, jpa, spring data jpa
-//	implementation 'org.springframework.boot:spring-boot-starter-data-jdbc'
+	implementation 'org.springframework.boot:spring-boot-starter-data-jdbc'
+	// mariaDB 클라이언트 추가
+	runtimeOnly 'org.mariadb.jdbc:mariadb-java-client'
 //	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
 
 	// 타임리프(템플릿 엔진 - JSP, 타임리프 등) 의존성
@@ -54,5 +56,5 @@ dependencies {
 }
 
 tasks.named('test') {
-	useJUnitPlatform()
+//	useJUnitPlatform()
 }

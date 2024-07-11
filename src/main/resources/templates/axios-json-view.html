@@ -38,6 +38,9 @@
         const jsonData = {name, email, password};
 
         try {
+
+            // 굳이 명시하지 않아도 axios가 application json으로 세팅해준다.
+            // (axios json + 파일 전송): Multipart Form data
             const response = await axios.post("http://localhost:8080/hello/axios-json-view", jsonData);
             console.log(jsonData);
             console.log(response.data);
