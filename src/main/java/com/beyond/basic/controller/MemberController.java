@@ -1,6 +1,7 @@
 package com.beyond.basic.controller;
 
 import com.beyond.basic.domain.Member;
+import com.beyond.basic.domain.MemberDetResDto;
 import com.beyond.basic.domain.MemberReqDto;
 import com.beyond.basic.domain.MemberResDto;
 import com.beyond.basic.service.MemberService;
@@ -60,8 +61,8 @@ public class MemberController {
     // int 또는 long 받을 경우 스프링에서 형변환 해준다. (String -> Long)
     @GetMapping("/member/detail/{id}")
     public String memberDetail(@PathVariable Long id, Model model) {
-        MemberResDto memberResDto = memberService.memberDetail(id);
-        model.addAttribute("memberResDto", memberResDto);
+        MemberDetResDto memberDetResDto = memberService.memberDetail(id);
+        model.addAttribute("memberResDto", memberDetResDto);
         return "member/member-detail";
     }
 
@@ -77,7 +78,7 @@ public class MemberController {
     // Jdbc <db 접근 기술>
     // jpa: 쿼리가 있을 때도, 없을 때도 있음
     // Spring Data Jpa: 쿼리 없음 (쿼리 X == ORM)
-    @PostMapping("member/create")
+    @PostMapping("/member/create")
     public String memberCreatePost(MemberReqDto dto, Model model) {
 
         System.out.println(dto);
@@ -93,6 +94,7 @@ public class MemberController {
         // 화면 리턴이 아닌 url 재호출(리다이렉트)
         return "redirect:/member/list";
     }
+
 
 
 }

@@ -39,9 +39,15 @@ repositories {
 dependencies {
 	// DB 연결 및 관리를 위한 의존성: jdbc, mybatis, jpa, spring data jpa
 	implementation 'org.springframework.boot:spring-boot-starter-data-jdbc'
+
+	// mybatis 관련 의존성 추가
+	// 스프링 재단에서 제공되는 스프링 종속성이 아니기에, 뒤에 버전 명시를 해주어야한다.
+	implementation 'org.mybatis.spring.boot:mybatis-spring-boot-starter:2.2.0'
+
 	// mariaDB 클라이언트 추가
 	runtimeOnly 'org.mariadb.jdbc:mariadb-java-client'
-//	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+
+	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
 
 	// 타임리프(템플릿 엔진 - JSP, 타임리프 등) 의존성
 	// implementation 키워드는 컴파일 시점과 런타임 시점에 모두 필요한 라이브러리임을 명시
