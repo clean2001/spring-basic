@@ -10,11 +10,6 @@ public class MemberReqDto {
 
     // dto에서 entity로 변환
     public Member toEntity() {
-        Member member = new Member();
-        member.setName(this.name);
-        member.setEmail(this.email);
-        member.setPassword(this.password);
-
-        return member;
+        return new Member(this.name, this.email, this.password);
     }
 }

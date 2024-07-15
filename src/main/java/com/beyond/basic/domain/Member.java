@@ -7,11 +7,15 @@ import org.hibernate.annotations.UpdateTimestamp;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.List;
+import java.util.stream.Collectors;
+
 
 @Data
 @Entity // JPA에게 entity manager가 관리해야하는 요소라는 것을 알려주는 것이다.
 // @Entity 어노테이션을 통해 엔티티 매니저에게 객체 관리를 위힘
 // 해당 클래스 명으로 테이블 자동 생성하고 각종 설정 정보를 위임한다.
+@NoArgsConstructor
 public class Member {
     @Id // pk 설정 => 이 설정을 반드시 해줘야한다!!!!!!!
     @GeneratedValue(strategy = GenerationType.IDENTITY) // identity: auto_increment 설정 / auto: jpa 자동으로 적절한 전략을 선택하도록 맡기는 것
@@ -30,4 +34,22 @@ public class Member {
 
     @UpdateTimestamp
     private LocalDateTime updateTime; // 값을 수정할 때마다 값이 계속 갱신되어야함
+
+
+    // 직접 만들어준 생성자
+    public Member(String name, String email, String password) {
+        this.name = name;
+        this.email = email;
+        this.password = password;
+    }
+
+
+    //== fromEntity ==//
+    public MemberDetResDto detFromEntity() {
+        return new MemberDetResDto(this);
+    }
+
+    public MemberResDto listFromEntity() {
+        return new MemberResDto(this);
+    }
 }

@@ -40,8 +40,11 @@ public class MemberService {
         // Member로 조립
         Member member = dto.toEntity(); // 이 부분 완전 중요함!!
 
+        // 저장
+        Member savedMember = memberRepository.save(member);
+
         System.out.println("member id: " + member.getId());
-        Member savedMember = memberRepository.findById(member.getId()).orElseThrow(() -> new EntityNotFoundException("member Service line 46"));
+        savedMember = memberRepository.findById(member.getId()).orElseThrow(() -> new EntityNotFoundException("member Service line 46"));
         System.out.println(savedMember);
         
         return savedMember;
@@ -54,30 +57,26 @@ public class MemberService {
         // 또한 예외를 강제 발생시킴으로써 클라이언트에게 적절한 예외 메시지를 뿌려줌
         Optional<Member> memberOpt = memberRepository.findById(id);
         Member member = memberOpt.orElseThrow(() -> new EntityNotFoundException("없는 회원입니다."));
-        MemberDetResDto resDto = new MemberDetResDto();
+        //== 원래 코드 ==//
+//        MemberDetResDto resDto = new MemberDetResDto();
+//
+//        resDto.setId(member.getId());
+//        resDto.setEmail(member.getEmail());
+//        resDto.setName(member.getName());
+//        resDto.setPassword(member.getPassword());
+//        LocalDateTime createdTime = member.getCreatedTime(); // createdtime 컬럼이 없다가 추가되는 경우, 널포인터 익셉션 때문에 좀 리스크가 있는 코드이긴하다.
+//        String timeStr = createdTime.getYear() + "년 " + createdTime.getMonthValue() + "월 " + createdTime.getDayOfMonth() + "일";
 
-        resDto.setId(member.getId());
-        resDto.setEmail(member.getEmail());
-        resDto.setName(member.getName());
-        resDto.setPassword(member.getPassword());
-        LocalDateTime createdTime = member.getCreatedTime(); // createdtime 컬럼이 없다가 추가되는 경우, 널포인터 익셉션 때문에 좀 리스크가 있는 코드이긴하다.
-        String timeStr = createdTime.getYear() + "년 " + createdTime.getMonthValue() + "월 " + createdTime.getDayOfMonth() + "일";
-        resDto.setCreatedTime(timeStr);
-
-        return resDto;
+        //== 원래 코드 끝 ==//
+        MemberDetResDto memberDetResDto = new MemberDetResDto();
+        return member.detFromEntity();
     }
 
     public List<MemberResDto> memberList() {
-        return memberRepository.findAll().stream().map(m -> {
-            if(m == null) return null;
-            MemberResDto memberResDto = new MemberResDto();
-            memberResDto.setId(m.getId());
-            memberResDto.setName(m.getName());
-            memberResDto.setEmail(m.getEmail());
-//            memberDetResDto.setPassword(m.getPassword());
+        List<Member> memberList = memberRepository.findAll();
+        MemberDetResDto memberDetResDto = new MemberDetResDto();
 
-            return memberResDto;
-        }).collect(Collectors.toList());
+        return memberList.stream().map(Member::listFromEntity).collect(Collectors.toList());
     }
 
 }
