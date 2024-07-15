@@ -8,13 +8,11 @@ import org.hibernate.annotations.UpdateTimestamp;
 import javax.persistence.*;
 import java.time.LocalDateTime;
 import java.util.List;
-import java.util.stream.Collectors;
 
-
-@Data
-@Entity // JPA에게 entity manager가 관리해야하는 요소라는 것을 알려주는 것이다.
 // @Entity 어노테이션을 통해 엔티티 매니저에게 객체 관리를 위힘
 // 해당 클래스 명으로 테이블 자동 생성하고 각종 설정 정보를 위임한다.
+@Data // FIXME: 삭제 필요
+@Entity // JPA에게 entity manager가 관리해야하는 요소라는 것을 알려주는 것이다.
 @NoArgsConstructor
 public class Member {
     @Id // pk 설정 => 이 설정을 반드시 해줘야한다!!!!!!!
@@ -28,6 +26,9 @@ public class Member {
 //    @Column(name="pw") // 이렇게 컬럼명과 다르게 할 수 있으나, 컬럼명과 변수명을 일치시키는 것이 혼선을 줄일 수 있다.
     // 만약 변수명을 passWord 이렇게 붙이면?? ==> 컬럼명은 pass_word 이렇게 들어감
     private String password;
+
+    @OneToMany(mappedBy = "member") // 여기서 mappedBy에 들어가는 것은 매핑이되어 있는 **변수명**이다
+    private List<Post> posts; // 변수명 아무거나 쓰면 된다.
 
     @CreationTimestamp // DB에는 current_timestamp가 생성되지 않음
     private LocalDateTime createdTime; // 카멜 케이스 사용시 DB에는 스네이크 케이스로 생성된다.

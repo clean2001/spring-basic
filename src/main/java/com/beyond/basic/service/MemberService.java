@@ -1,18 +1,13 @@
 package com.beyond.basic.service;
 
-import com.beyond.basic.controller.MemberController;
-import com.beyond.basic.domain.Member;
-import com.beyond.basic.domain.MemberDetResDto;
-import com.beyond.basic.domain.MemberReqDto;
-import com.beyond.basic.domain.MemberResDto;
-import com.beyond.basic.repository.*;
+import com.beyond.basic.domain.*;
+import com.beyond.basic.repository.MemberRepository;
+import com.beyond.basic.repository.MemberSpringDataJpaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityNotFoundException;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -57,25 +52,18 @@ public class MemberService {
         // 또한 예외를 강제 발생시킴으로써 클라이언트에게 적절한 예외 메시지를 뿌려줌
         Optional<Member> memberOpt = memberRepository.findById(id);
         Member member = memberOpt.orElseThrow(() -> new EntityNotFoundException("없는 회원입니다."));
-        //== 원래 코드 ==//
-//        MemberDetResDto resDto = new MemberDetResDto();
-//
-//        resDto.setId(member.getId());
-//        resDto.setEmail(member.getEmail());
-//        resDto.setName(member.getName());
-//        resDto.setPassword(member.getPassword());
-//        LocalDateTime createdTime = member.getCreatedTime(); // createdtime 컬럼이 없다가 추가되는 경우, 널포인터 익셉션 때문에 좀 리스크가 있는 코드이긴하다.
-//        String timeStr = createdTime.getYear() + "년 " + createdTime.getMonthValue() + "월 " + createdTime.getDayOfMonth() + "일";
 
-        //== 원래 코드 끝 ==//
-        MemberDetResDto memberDetResDto = new MemberDetResDto();
+        // 글쓴이의 글쓴 개수
+        System.out.println("글쓴이의 쓴 글의 개수 " + member.getPosts().size());
+        for(Post p : member.getPosts()) {
+            System.out.println("글의 제목 " + p.getTitle());
+        }
+
         return member.detFromEntity();
     }
 
     public List<MemberResDto> memberList() {
         List<Member> memberList = memberRepository.findAll();
-        MemberDetResDto memberDetResDto = new MemberDetResDto();
-
         return memberList.stream().map(Member::listFromEntity).collect(Collectors.toList());
     }
 

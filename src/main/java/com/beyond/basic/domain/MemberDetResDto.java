@@ -10,7 +10,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @AllArgsConstructor
-@NoArgsConstructor
+@NoArgsConstructor // Object Mapper에서 기본 생성자와 Getter가 필요함
 @Data
 public class MemberDetResDto {
     private Long id;

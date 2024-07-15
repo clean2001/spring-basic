@@ -130,7 +130,7 @@ public class HelloController {
     @ResponseBody
     // @ModelAttribute는 생략 가능 => 명시해주는 것이 더 좋지만, 강사님은 안붙이신다고 하심.
     // @ModelAttribute: 데이터 바인딩. @ModelAttribute는 붙여도 되고 안붙여도 된다!!
-    public Hello formPost2(@ModelAttribute Hello hello) {
+    public Hello formPost2(@ModelAttribute Hello hello) { // x-www 아니면 multipart => key-value 형식
         System.out.println(hello);
 
         return hello;

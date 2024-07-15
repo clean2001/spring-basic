@@ -1,13 +1,12 @@
 package com.beyond.basic.controller;
 
-import com.beyond.basic.domain.Member;
 import com.beyond.basic.domain.MemberDetResDto;
 import com.beyond.basic.domain.MemberReqDto;
 import com.beyond.basic.domain.MemberResDto;
+import com.beyond.basic.dto.TestRequest;
+import com.beyond.basic.dto.TestResponse;
 import com.beyond.basic.service.MemberService;
-import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -20,7 +19,7 @@ public class MemberController {
     // 의존성 주입(DI) 방법 1. 생성자 주입 방식 ==> 가장 많이 사용하는 방식
     // 장점: 1) final을 통해 상수로 사용 가능 / 2) 다형성 구현 가능 / 3) 순환 참조 방지
     // 순환 참조란?? => 순환해서 참조하고 있다는 의미이다.
-    // 컴파
+    // 생성자가 하나밖에 없을 때에는 @Autowired가 생략 가능하다!!
     // Controller Service =>
     // Controller안에 Servief를
 //    private final MemberService memberService;
@@ -79,7 +78,7 @@ public class MemberController {
     // jpa: 쿼리가 있을 때도, 없을 때도 있음
     // Spring Data Jpa: 쿼리 없음 (쿼리 X == ORM)
     @PostMapping("/member/create")
-    public String memberCreatePost(MemberReqDto dto, Model model) {
+    public String memberCreatePost(MemberReqDto dto, Model model) { // 지금 이거는 JSON 구조가 아니기 때문에 문제가 없음. 만약 json이면 NoArgs가 필요했을 것으로 보임
 
         System.out.println(dto);
 
@@ -95,6 +94,15 @@ public class MemberController {
         return "redirect:/member/list";
     }
 
+
+    // 테스트 결과 정리
+    // Object Mapper가 역직렬화를 할 때(즉 요청 객체에서)는 NoArgsConstructor가 반드시 필요하다. getter도 필요없음
+    // Object Mapper가 직렬화를 할 때 NoArgsConstructor가 필요없다. 대신 getter가 반드시 필요함!!
+    @ResponseBody
+    @PostMapping("/test")
+    public TestResponse testApi(@RequestBody TestRequest testRequest) {
+        return new TestResponse("결과값~~~");
+    }
 
 
 }
