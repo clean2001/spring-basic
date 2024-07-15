@@ -54,7 +54,7 @@ public class MemberJdbcRepository implements MemberRepository {
             PreparedStatement preparedStatement = connection.prepareStatement(sql);
             ResultSet resultSet = preparedStatement.executeQuery();
 
-            while(resultSet.next()) { // result set의 핵심 동작 원리?? => cursor
+            while(resultSet.next()) { // resultset의 핵심 동작 원리?? => cursor
                 // 문자열과
                 Member member = new Member();
                 member.setId(resultSet.getLong("id"));

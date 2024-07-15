@@ -11,6 +11,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityNotFoundException;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -36,11 +38,7 @@ public class MemberService {
             throw new IllegalArgumentException("비밀번호가 너무 짧습니다.");
         }
         // Member로 조립
-        Member member = new Member();
-        member.setName(dto.getName());
-        member.setEmail(dto.getEmail());
-        member.setPassword(dto.getPassword());
-        memberRepository.save(member);
+        Member member = dto.toEntity(); // 이 부분 완전 중요함!!
 
         System.out.println("member id: " + member.getId());
         Member savedMember = memberRepository.findById(member.getId()).orElseThrow(() -> new EntityNotFoundException("member Service line 46"));
@@ -62,6 +60,9 @@ public class MemberService {
         resDto.setEmail(member.getEmail());
         resDto.setName(member.getName());
         resDto.setPassword(member.getPassword());
+        LocalDateTime createdTime = member.getCreatedTime(); // createdtime 컬럼이 없다가 추가되는 경우, 널포인터 익셉션 때문에 좀 리스크가 있는 코드이긴하다.
+        String timeStr = createdTime.getYear() + "년 " + createdTime.getMonthValue() + "월 " + createdTime.getDayOfMonth() + "일";
+        resDto.setCreatedTime(timeStr);
 
         return resDto;
     }
