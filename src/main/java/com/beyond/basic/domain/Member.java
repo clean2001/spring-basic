@@ -46,10 +46,16 @@ public class Member {
 
     //== fromEntity ==//
     public MemberDetResDto detFromEntity() {
-        return new MemberDetResDto(this);
+//        return new MemberDetResDto(this);
+        return new MemberDetResDto(this.id, this.name, this.email, this.password, createTimeStr(this.createdTime));
     }
 
     public MemberResDto listFromEntity() {
-        return new MemberResDto(this);
+//        return new MemberResDto(this);
+        return new MemberResDto(this.id, this.name, this.email);
+    }
+
+    private String createTimeStr(LocalDateTime createdTime) {
+        return createdTime.getYear() + "년 " + createdTime.getMonthValue() + "월 " + createdTime.getDayOfMonth() + "일";
     }
 }
