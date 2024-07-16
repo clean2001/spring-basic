@@ -3,6 +3,7 @@ package com.beyond.basic.controller;
 import com.beyond.basic.domain.MemberDetResDto;
 import com.beyond.basic.domain.MemberReqDto;
 import com.beyond.basic.domain.MemberResDto;
+import com.beyond.basic.dto.MemberUpdateDto;
 import com.beyond.basic.dto.TestRequest;
 import com.beyond.basic.dto.TestResponse;
 import com.beyond.basic.service.MemberService;
@@ -49,6 +50,20 @@ public class MemberRestController {
     public TestResponse testApi(@RequestBody TestRequest testRequest) {
         return new TestResponse("결과값~~~");
     }
+
+    // Put으로 하고 @RequestParam하면 => body에다가 키벨류 형식으로 받을 수 있음
+    @PatchMapping("/member/pw/update")
+    public void memberList(@RequestBody MemberUpdateDto dto) {
+        memberService.pwUpdate(dto);
+    }
+
+    // 만약 delYn으로 상태 관리를 할 것임. 그럼 실제론 update를 칠건데, @DeleteMapping이 맞을까??
+    // 선택의 문제이긴하지만 맞다. 왜냐면 논리적으로 지우는 작업이긴 하니까 (
+    @DeleteMapping("/member/delete/{id}")
+    public void deleteMember(@PathVariable("id") Long id) {
+        memberService.deleteMember(id);
+    }
+
 
 
 }

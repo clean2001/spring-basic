@@ -59,4 +59,10 @@ public class Member {
     private String createTimeStr(LocalDateTime createdTime) {
         return createdTime.getYear() + "년 " + createdTime.getMonthValue() + "월 " + createdTime.getDayOfMonth() + "일";
     }
+
+    // password 상단에 @Setter를 통해 특정 변수만 setter 사용이 가능하나,
+    // 일반적으로 의도를 명확하게 한 메서드를 별도로 만들어 사용하는 것을 권장.
+    public void updatePw(String password) {
+        this.password = password;
+    }
 }

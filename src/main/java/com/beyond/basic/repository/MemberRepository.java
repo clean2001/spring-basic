@@ -17,5 +17,4 @@ public interface MemberRepository {
     // 아이디로 멤버 조회
     Optional<Member> findById(Long id);
 
-
 }

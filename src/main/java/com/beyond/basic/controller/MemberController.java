@@ -94,7 +94,6 @@ public class MemberController {
         return "redirect:/member/list";
     }
 
-
     // 테스트 결과 정리
     // Object Mapper가 역직렬화를 할 때(즉 요청 객체에서)는 NoArgsConstructor가 반드시 필요하다. getter도 필요없음
     // Object Mapper가 직렬화를 할 때 NoArgsConstructor가 필요없다. 대신 getter가 반드시 필요함!!

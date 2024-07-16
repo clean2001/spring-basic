@@ -2,6 +2,8 @@ package com.beyond.basic.domain;
 
 import com.beyond.basic.dto.PostResDto;
 import lombok.Getter;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 
 import javax.persistence.*;
 
@@ -18,6 +20,7 @@ public class Post {
 
     @ManyToOne
     @JoinColumn(name = "member_id")
+    @OnDelete(action = OnDeleteAction.CASCADE) // cascade를 양쪽에 걸어줘야하는건가??
     private Member member;
 
     // post.getMember() => 이렇게 하는 순간 member를 조회해줌 (entity Manager가 해준다.) JPA: java persistence api

@@ -3,12 +3,12 @@ package com.beyond.basic.controller;
 import com.beyond.basic.domain.Hello;
 import com.beyond.basic.domain.Student;
 import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -21,9 +21,12 @@ public class HelloController {
     //    @ResponseBody // ResponseBody를 사용하면 화면이 아닌 데이터를 return 해준다! 만약 ResponseBody가 없으면 스프링은 templates 폴더 밑에 helloworld.html 화면을 찾아 리턴한다.
     // 만약 여기서 responsebody가 없고  return 타입이 스트링이면 스프링은
     @GetMapping // Get 요청을 처리. url 패턴을 명시
-    public String helloWorld() {
+    public String helloWorld(HttpServletRequest request) {
+        System.out.println(request.getSession());
+        System.out.println(request.getHeader("Cookie"));
         return "helloworld";
     }
+
 
 
     // data를 리턴하되, json 형식으로 리턴
