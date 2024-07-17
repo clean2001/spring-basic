@@ -24,7 +24,7 @@ public class HelloController {
     public String helloWorld(HttpServletRequest request) {
         System.out.println(request.getSession());
         System.out.println(request.getHeader("Cookie"));
-        return "helloworld";
+        return "he lloworld";
     }
 
 

@@ -4,13 +4,12 @@ import lombok.Getter;
 import org.springframework.http.HttpStatus;
 
 @Getter
-public class SuccessResponse<T> {
-    int statusCode;
+public class SuccessResponse extends CustomResponse {
     String statusMessage;
-    T result;
+    Object result;
 
-    public SuccessResponse(HttpStatus httpStatus, String statusMessage, T result) {
-        this.statusCode = httpStatus.value();
+    public SuccessResponse(HttpStatus httpStatus, String statusMessage, Object result) {
+        super(httpStatus.value());
         this.statusMessage = httpStatus.getReasonPhrase();
         this.result = result;
     }

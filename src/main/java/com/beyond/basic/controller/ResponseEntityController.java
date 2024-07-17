@@ -61,9 +61,9 @@ public class ResponseEntityController {
 
 
     @GetMapping("/custom2")
-    public ResponseEntity<SuccessResponse<Member>> custom2() {
+    public ResponseEntity<SuccessResponse> custom2() {
         Member member = new Member("hong", "hong@naver.com", "1234");
         // 헤더에 넣는건 필수이다. 바디에 넣는건 Optional이다.
-        return new ResponseEntity<>(new SuccessResponse<>(CREATED, CREATED.getReasonPhrase(), member), OK);
+        return new ResponseEntity<>(new SuccessResponse(CREATED, CREATED.getReasonPhrase(), member), OK);
     }
 }

@@ -4,6 +4,11 @@
 #  port: 8081
 
 spring:
+  mvc:
+    # spring boot 2.4 이상에서는 기본적으로 PathPatternParser를 사용하고 있는데,
+    # spring fox와 같은 일부 라이브러리에서는 해당 pathpattern rule과 충돌나는 경우가 있음. 그래서 패스 패턴 룰을 바꿔준것임
+    pathmatch:
+      matching-strategy: ant_path_matcher
   datasource:
     driver-class-name: org.mariadb.jdbc.Driver
     url: jdbc:mariadb://localhost:3307/basic
@@ -31,4 +36,5 @@ spring:
 
 mybatis:
   mapper-locations: classpath:/mapper/**/*.xml
+
 

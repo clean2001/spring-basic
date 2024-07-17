@@ -1,6 +1,14 @@
 package com.beyond.basic.response;
 
-public class ErrorResponse {
-    private int stautsCode;
+import lombok.Getter;
+
+@Getter
+public class ErrorResponse extends CustomResponse {
+
     private String errorMessage;
+
+    public ErrorResponse(int stautsCode, String errorMessage) {
+        super(stautsCode);
+        this.errorMessage = errorMessage;
+    }
 }

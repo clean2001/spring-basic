@@ -2,8 +2,6 @@ package com.beyond.basic.domain;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.hibernate.annotations.CreationTimestamp;
-import org.hibernate.annotations.UpdateTimestamp;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -14,7 +12,7 @@ import java.util.List;
 @Data // FIXME: 삭제 필요
 @Entity // JPA에게 entity manager가 관리해야하는 요소라는 것을 알려주는 것이다.
 @NoArgsConstructor
-public class Member {
+public class Member extends BaseEntity {
     @Id // pk 설정 => 이 설정을 반드시 해줘야한다!!!!!!!
     @GeneratedValue(strategy = GenerationType.IDENTITY) // identity: auto_increment 설정 / auto: jpa 자동으로 적절한 전략을 선택하도록 맡기는 것
     private Long id;
@@ -30,12 +28,6 @@ public class Member {
     @OneToMany(mappedBy = "member") // 여기서 mappedBy에 들어가는 것은 매핑이되어 있는 **변수명**이다
     private List<Post> posts; // 변수명 아무거나 쓰면 된다.
 
-    @CreationTimestamp // DB에는 current_timestamp가 생성되지 않음
-    private LocalDateTime createdTime; // 카멜 케이스 사용시 DB에는 스네이크 케이스로 생성된다.
-
-    @UpdateTimestamp
-    private LocalDateTime updateTime; // 값을 수정할 때마다 값이 계속 갱신되어야함
-
 
     // 직접 만들어준 생성자
     public Member(String name, String email, String password) {
@@ -48,7 +40,7 @@ public class Member {
     //== fromEntity ==//
     public MemberDetResDto detFromEntity() {
 //        return new MemberDetResDto(this);
-        return new MemberDetResDto(this.id, this.name, this.email, this.password, createTimeStr(this.createdTime));
+        return new MemberDetResDto(this.id, this.name, this.email, this.password, createTimeStr(getCreatedTime()));
     }
 
     public MemberResDto listFromEntity() {

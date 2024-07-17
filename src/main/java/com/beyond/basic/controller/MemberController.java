@@ -59,7 +59,7 @@ public class MemberController {
     // 화면명: member-detail
     // int 또는 long 받을 경우 스프링에서 형변환 해준다. (String -> Long)
     @GetMapping("/member/detail/{id}")
-    public String memberDetail(@PathVariable Long id, Model model) {
+    public String memberDetail(@PathVariable Long id, Model model) throws Exception {
         MemberDetResDto memberDetResDto = memberService.memberDetail(id);
         model.addAttribute("memberResDto", memberDetResDto);
         return "member/member-detail";
@@ -92,6 +92,7 @@ public class MemberController {
         // member/list로 리다이렉트
         // 화면 리턴이 아닌 url 재호출(리다이렉트)
         return "redirect:/member/list";
+
     }
 
     // 테스트 결과 정리

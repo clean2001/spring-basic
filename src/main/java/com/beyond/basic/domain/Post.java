@@ -9,7 +9,7 @@ import javax.persistence.*;
 
 @Getter
 @Entity
-public class Post {
+public class Post extends BaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -22,6 +22,7 @@ public class Post {
     @JoinColumn(name = "member_id")
     @OnDelete(action = OnDeleteAction.CASCADE) // cascade를 양쪽에 걸어줘야하는건가??
     private Member member;
+
 
     // post.getMember() => 이렇게 하는 순간 member를 조회해줌 (entity Manager가 해준다.) JPA: java persistence api
     // JPA의 영속성 컨텍스틍 의해 Member 객체가 관리된다.

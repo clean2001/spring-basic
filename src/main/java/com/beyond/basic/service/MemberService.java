@@ -36,12 +36,17 @@ public class MemberService {
     4.  @Transactional(readOnly=true)를 걸고, 예외가 터지지 않게 함 => 저장된다.
      */
     @Transactional(readOnly = true)
-    public Member memberCreate(MemberReqDto dto) {
+    public Member memberCreate(MemberReqDto dto) throws IllegalArgumentException {
         if(dto.getPassword().length() < 8) {
             throw new IllegalArgumentException("비밀번호가 너무 짧습니다.");
         }
         // Member로 조립
         Member member = dto.toEntity(); // 이 부분 완전 중요함!!
+
+        // 이메일 중복 검증
+        if(memberRepository.findByEmail(member.getEmail()).isPresent()) {
+            throw new IllegalArgumentException("이메일 중복");
+        }
 
         // 저장
         Member savedMember = memberRepository.save(member);
@@ -58,7 +63,7 @@ public class MemberService {
         return savedMember;
     }
 
-    public MemberDetResDto memberDetail(Long id) {
+    public MemberDetResDto memberDetail(Long id) throws EntityNotFoundException {
 
         // 예외를 터뜨리는 이유
         // 클라이언트에게 적절한 예외 메시지와 상태 코드를 주는 것이 주요 목적
