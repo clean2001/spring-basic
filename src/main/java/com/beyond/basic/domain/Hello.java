@@ -14,13 +14,39 @@ public class Hello {
     private String email;
     private String password;
 
+    // Builder 패턴 직접 구현
+    // 빌터 패턴을 구현하기 위해서는 빌더 적용 대상 생성자가 필요하다.
+    public Hello(HelloBuilder helloBuilder) {
+        this.name = helloBuilder.name;
+        this.email = helloBuilder.email;
+        this.password = helloBuilder.password;
+    }
 
-//    @Override
-//    public String toString() {
-//        return "Hello{" +
-//                "name='" + name + '\'' +
-//                ", email='" + email + '\'' +
-//                ", password='" + password + '\'' +
-//                '}';
-//    }
+    public static HelloBuilder builder() {
+        return new HelloBuilder();
+    }
+    public static class HelloBuilder {
+        private String name;
+        private String email;
+        private String password;
+
+        public HelloBuilder name(String name) {
+            this.name = name;
+            return this;
+        }
+
+        public HelloBuilder email(String email) {
+            this.email = email;
+            return this;
+        }
+
+        public HelloBuilder password(String password) {
+            this.email = password;
+            return this;
+        }
+
+        public Hello build() {
+            return new Hello(this);
+        }
+    }
 }
